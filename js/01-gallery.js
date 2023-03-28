@@ -1,29 +1,23 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 const galleryListEl = document.querySelector('.gallery');
+const createGalleryList = galleryItems.map(
+  ({ preview, original, description }) =>
+      `
+      <li class="gallery__item">
+          <a class="gallery__link" href="large-image.jpg">
+              <img
+                  class="gallery__image"
+                  src="${preview}"
+                  data-source="${original}"
+                  alt="${description}"
+              />
+          </a>
+      </li>
+      `
+  ).join("");
 
-const createGalleryList = function (array) {
-  array.forEach(({preview, original, description}) => {
-    const galleryItemEl = document.createElement('li');
-    galleryItemEl.classList.add('gallery__item');
-
-    const galleryLinkEl = document.createElement('a');
-    galleryLinkEl.classList.add('gallery__link');
-    galleryLinkEl.href = original;
-    galleryItemEl.append(galleryLinkEl);
-
-    const galleryImgEl = document.createElement('img');
-    galleryImgEl.classList.add('gallery__image');
-    galleryImgEl.src = preview;
-    galleryImgEl.dataset.source = original;
-    galleryImgEl.alt = description;
-
-    galleryLinkEl.append(galleryImgEl);
-    galleryListEl.append(galleryItemEl);
-  });
-};
-
-createGalleryList(galleryItems);
+  galleryListEl.innerHTML = createGalleryList;
 
 const onGalleryClick = function (event) {
     event.preventDefault();
